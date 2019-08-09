@@ -23,6 +23,9 @@ function pickManifest (packument, wanted, opts) {
   const versions = Object.keys(packument.versions || {}).filter(v => {
     return semver.valid(v, true)
   })
+  const policyRestrictions = packument.policyRestrictions
+  const restrictedVersions = policyRestrictions
+  ? Object.keys(packument.policyRestrictions.restrictedVersions) : []
 
   function enjoyableBy (v) {
     return !time || (
@@ -32,7 +35,7 @@ function pickManifest (packument, wanted, opts) {
 
   let err
 
-  if (!versions.length) {
+  if (!versions.length && !restrictedVersions.length) {
     err = new Error(`No valid versions available for ${packument.name}`)
     err.code = 'ENOVERSIONS'
     err.name = packument.name
@@ -98,16 +101,24 @@ function pickManifest (packument, wanted, opts) {
     packument.versions[target]
   )
   if (!manifest) {
-    err = new Error(
-      `No matching version found for ${packument.name}@${wanted}${
-        opts.enjoyBy
-          ? ` with an Enjoy By date of ${
-            new Date(opts.enjoyBy).toLocaleString()
-          }. Maybe try a different date?`
-          : ''
-      }`
-    )
-    err.code = 'ETARGET'
+    // Check if target is forbidden
+    const isForbidden = target && policyRestrictions && packument.policyRestrictions.restrictedVersions[target]
+    const pckg = `${packument.name}@${wanted}${
+      opts.enjoyBy
+        ? ` with an Enjoy By date of ${
+          new Date(opts.enjoyBy).toLocaleString()
+        }. Maybe try a different date?`
+        : ''
+    }`
+
+    if (isForbidden) {
+      err = new Error(`Could not download ${pckg} due to policy violations.\n${packument.policyRestrictions.message}\n`)
+      err.code = 'E403'
+    } else {
+      err = new Error(`No matching version found for ${pckg}.`)
+      err.code = 'ETARGET'
+    }
+
     err.name = packument.name
     err.type = type
     err.wanted = wanted
