@@ -25,7 +25,7 @@ function pickManifest (packument, wanted, opts) {
   })
   const policyRestrictions = packument.policyRestrictions
   const restrictedVersions = policyRestrictions
-  ? Object.keys(packument.policyRestrictions.restrictedVersions) : []
+  ? Object.keys(policyRestrictions.versions) : []
 
   function enjoyableBy (v) {
     return !time || (
@@ -102,7 +102,7 @@ function pickManifest (packument, wanted, opts) {
   )
   if (!manifest) {
     // Check if target is forbidden
-    const isForbidden = target && policyRestrictions && packument.policyRestrictions.restrictedVersions[target]
+    const isForbidden = target && policyRestrictions && policyRestrictions.versions[target]
     const pckg = `${packument.name}@${wanted}${
       opts.enjoyBy
         ? ` with an Enjoy By date of ${
@@ -112,7 +112,7 @@ function pickManifest (packument, wanted, opts) {
     }`
 
     if (isForbidden) {
-      err = new Error(`Could not download ${pckg} due to policy violations.\n${packument.policyRestrictions.message}\n`)
+      err = new Error(`Could not download ${pckg} due to policy violations.\n${policyRestrictions.message}\n`)
       err.code = 'E403'
     } else {
       err = new Error(`No matching version found for ${pckg}.`)

@@ -131,7 +131,7 @@ test('ETARGET if range does not match anything', t => {
 test('E403 if version is forbidden', t => {
   const metadata = {
     policyRestrictions: {
-      restrictedVersions: {
+      versions: {
         '2.1.0': { version: '2.1.0' }
       }
     },
@@ -216,7 +216,7 @@ test('errors if metadata has no versions', t => {
 
 test('errors if metadata has no versions or restricted versions', t => {
   t.throws(() => {
-    pickManifest({versions: {}, policyRestrictions: { restrictedVersions: {} }}, '^1.0.0')
+    pickManifest({versions: {}, policyRestrictions: { versions: {} }}, '^1.0.0')
   }, {code: 'ENOVERSIONS'})
   t.throws(() => {
     pickManifest({}, '^1.0.0')
