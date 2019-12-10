@@ -30,7 +30,7 @@
   "dependencies": {
     "figgy-pudding": "^3.5.1",
     "npm-package-arg": "^7.0.0",
-    "semver": "^5.4.1"
+    "semver": "^6.3.0"
   },
   "devDependencies": {
     "nyc": "^13.1.0",
