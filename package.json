@@ -12,7 +12,8 @@
     "prepublishOnly": "git push --follow-tags",
     "prerelease": "npm t",
     "release": "standard-version -s",
-    "test": "tap"
+    "test": "tap",
+    "lint": "standard"
   },
   "repository": "https://github.com/npm/npm-pick-manifest",
   "keywords": [
