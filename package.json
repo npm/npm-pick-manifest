@@ -12,6 +12,7 @@
     "prepublishOnly": "git push --follow-tags",
     "prerelease": "npm t",
     "release": "standard-version -s",
+    "coverage": "tap --coverage",
     "test": "tap",
     "lint": "standard"
   },
