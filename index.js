@@ -33,13 +33,18 @@ const pickManifest = (packument, wanted, opts) => {
     npmVersion = null,
     includeStaged = false,
     avoid = null,
-    avoidStrict = false
+    avoidStrict = false,
+    [_getVersionList]: versionList = false
   } = opts
 
   const { name, time: verTimes } = packument
   const versions = packument.versions || {}
 
   if (avoidStrict) {
+    if (versionList) {
+      throw new Error('Cannot use avoidStrict with versionList()')
+    }
+
     const looseOpts = {
       ...opts,
       avoidStrict: false
@@ -99,10 +104,14 @@ const pickManifest = (packument, wanted, opts) => {
     // if the version in the dist-tags is before the before date, then
     // we use that.  Otherwise, we get the highest precedence version
     // prior to the dist-tag.
-    if (isBefore(verTimes, ver, time)) {
-      return decorateAvoid(versions[ver] || staged[ver] || restricted[ver], avoid)
+    const result = isBefore(verTimes, ver, time)
+      ? decorateAvoid(versions[ver] || staged[ver] || restricted[ver], avoid)
+      : pickManifest(packument, `<=${ver}`, opts)
+
+    if (versionList) {
+      return result._shouldAvoid ? [] : [ result.version ]
     } else {
-      return pickManifest(packument, `<=${ver}`, opts)
+      return result
     }
   }
 
@@ -110,7 +119,14 @@ const pickManifest = (packument, wanted, opts) => {
   if (wanted && type === 'version') {
     const ver = semver.clean(wanted, { loose: true })
     const mani = versions[ver] || staged[ver] || restricted[ver]
-    return isBefore(verTimes, ver, time) ? decorateAvoid(mani, avoid) : null
+    const result = isBefore(verTimes, ver, time)
+      ? decorateAvoid(mani, avoid)
+      : null
+    if (versionList) {
+      return !result || result._shouldAvoid ? [] : [ result.version ]
+    } else {
+      return result
+    }
   }
 
   // ok, sort based on our heuristics, and pick the best fit
@@ -120,7 +136,7 @@ const pickManifest = (packument, wanted, opts) => {
   // but skip this if it should be avoided, in that case we have
   // to try a little harder.
   const defaultVer = distTags[defaultTag]
-  if (defaultVer &&
+  if (defaultVer && !versionList &&
       (range === '*' || semver.satisfies(defaultVer, range, { loose: true })) &&
       !shouldAvoid(defaultVer, avoid)) {
     const mani = versions[defaultVer]
@@ -136,6 +152,9 @@ const pickManifest = (packument, wanted, opts) => {
     .filter(([ver, mani]) => isBefore(verTimes, ver, time))
 
   if (!allEntries.length) {
+    if (versionList) {
+      return []
+    }
     throw Object.assign(new Error(`No versions available for ${name}`), {
       code: 'ENOVERSIONS',
       name,
@@ -147,6 +166,7 @@ const pickManifest = (packument, wanted, opts) => {
   }
 
   const sortSemverOpt = { loose: true }
+  const defaultVersion = distTags[defaultTag]
   const entries = allEntries.filter(([ver, mani]) =>
     semver.satisfies(ver, range, { loose: true }))
     .sort((a, b) => {
@@ -162,6 +182,8 @@ const pickManifest = (packument, wanted, opts) => {
       const notdeprb = !manib.deprecated
       const enginea = engineOk(mania, npmVersion, nodeVersion)
       const engineb = engineOk(manib, npmVersion, nodeVersion)
+      const isdefa = vera === defaultVersion
+      const isdefb = verb === defaultVersion
       // sort by:
       // - not an avoided version
       // - not restricted
@@ -176,13 +198,24 @@ const pickManifest = (packument, wanted, opts) => {
         ((notdeprb && engineb) - (notdepra && enginea)) ||
         (engineb - enginea) ||
         (notdeprb - notdepra) ||
+        (isdefb - isdefa) ||
         semver.rcompare(vera, verb, sortSemverOpt)
     })
+
+  if (versionList) {
+    return entries
+      .filter(entry => !shouldAvoid(entry[0], avoid))
+      .map(entry => entry[0])
+  }
 
   return decorateAvoid(entries[0] && entries[0][1], avoid)
 }
 
-module.exports = (packument, wanted, opts = {}) => {
+const _getVersionList = Symbol('_getVersionList')
+const versionList = (packument, wanted, opts = {}) =>
+  pickManifest(packument, wanted, { ...opts, [_getVersionList]: true })
+
+module.exports = Object.assign((packument, wanted, opts = {}) => {
   const picked = pickManifest(packument, wanted, opts)
   const policyRestrictions = packument.policyRestrictions
   const restricted = (policyRestrictions && policyRestrictions.versions) || {}
@@ -213,4 +246,4 @@ module.exports = (packument, wanted, opts = {}) => {
     distTags: packument['dist-tags'],
     defaultTag
   })
-}
+}, { versionList })
