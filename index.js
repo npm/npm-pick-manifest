@@ -85,7 +85,11 @@ const pickManifest = (packument, wanted, opts) => {
     packument.policyRestrictions.versions) || {}
 
   const time = before && verTimes ? +(new Date(before)) : Infinity
-  const spec = npa.resolve(name, wanted || defaultTag)
+  let spec = npa.resolve(name, wanted || defaultTag)
+  if (spec.type === 'alias') {
+    spec = spec.subSpec
+  }
+
   const type = spec.type
   const distTags = packument['dist-tags'] || {}
 
