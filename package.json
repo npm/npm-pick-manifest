@@ -4,16 +4,21 @@
   "description": "Resolves a matching manifest from a package metadata document according to standard npm semver resolution rules.",
   "main": "./lib",
   "files": [
-    "./lib"
+    "bin",
+    "lib"
   ],
   "scripts": {
     "coverage": "tap",
-    "lint": "standard",
+    "lint": "eslint '**/*.js'",
     "test": "tap",
     "posttest": "npm run lint",
     "preversion": "npm test",
     "postversion": "npm publish",
-    "prepublishOnly": "git push origin --follow-tags"
+    "prepublishOnly": "git push origin --follow-tags",
+    "postlint": "npm-template-check",
+    "template-copy": "npm-template-copy --force",
+    "lintfix": "npm run lint -- --fix",
+    "snap": "tap"
   },
   "repository": "https://github.com/npm/npm-pick-manifest",
   "keywords": [
@@ -21,11 +26,7 @@
     "semver",
     "package manager"
   ],
-  "author": {
-    "name": "Kat Marchán",
-    "email": "kzm@sykosomatic.org",
-    "twitter": "maybekatz"
-  },
+  "author": "GitHub Inc.",
   "license": "ISC",
   "dependencies": {
     "npm-install-checks": "^4.0.0",
@@ -34,10 +35,17 @@
     "semver": "^7.3.4"
   },
   "devDependencies": {
+    "@npmcli/template-oss": "^2.7.1",
     "standard": "^14.3.1",
     "tap": "^15.0.9"
   },
   "tap": {
     "check-coverage": true
+  },
+  "engines": {
+    "node": "^12.13.0 || ^14.15.0 || >=16"
+  },
+  "templateOSS": {
+    "version": "2.7.1"
   }
 }
