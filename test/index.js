@@ -10,8 +10,8 @@ test('basic carat range selection', t => {
       '1.0.0': { version: '1.0.0' },
       '1.0.1': { version: '1.0.1' },
       '1.0.2': { version: '1.0.2' },
-      '2.0.0': { version: '2.0.0' }
-    }
+      '2.0.0': { version: '2.0.0' },
+    },
   }
   const manifest = pickManifest(metadata, '^1.0.0')
   t.equal(manifest.version, '1.0.2', 'picked the right manifest using ^')
@@ -24,8 +24,8 @@ test('basic tilde range selection', t => {
       '1.0.0': { version: '1.0.0' },
       '1.0.1': { version: '1.0.1' },
       '1.0.2': { version: '1.0.2' },
-      '2.0.0': { version: '2.0.0' }
-    }
+      '2.0.0': { version: '2.0.0' },
+    },
   }
   const manifest = pickManifest(metadata, '~1.0.0')
   t.equal(manifest.version, '1.0.2', 'picked the right manifest using ~')
@@ -38,8 +38,8 @@ test('basic mathematical range selection', t => {
       '1.0.0': { version: '1.0.0' },
       '1.0.1': { version: '1.0.1' },
       '1.0.2': { version: '1.0.2' },
-      '2.0.0': { version: '2.0.0' }
-    }
+      '2.0.0': { version: '2.0.0' },
+    },
   }
   const manifest1 = pickManifest(metadata, '>=1.0.0 <2')
   t.equal(manifest1.version, '1.0.2', 'picked the right manifest using mathematical range')
@@ -54,8 +54,8 @@ test('basic version selection', t => {
       '1.0.0': { version: '1.0.0' },
       '1.0.1': { version: '1.0.1' },
       '1.0.2': { version: '1.0.2' },
-      '2.0.0': { version: '2.0.0' }
-    }
+      '2.0.0': { version: '2.0.0' },
+    },
   }
   const manifest = pickManifest(metadata, '1.0.0')
   t.equal(manifest.version, '1.0.0', 'picked the right manifest using specific version')
@@ -65,14 +65,14 @@ test('basic version selection', t => {
 test('basic tag selection', t => {
   const metadata = {
     'dist-tags': {
-      foo: '1.0.1'
+      foo: '1.0.1',
     },
     versions: {
       '1.0.0': { version: '1.0.0' },
       '1.0.1': { version: '1.0.1' },
       '1.0.2': { version: '1.0.2' },
-      '2.0.0': { version: '2.0.0' }
-    }
+      '2.0.0': { version: '2.0.0' },
+    },
   }
   const manifest = pickManifest(metadata, 'foo')
   t.equal(manifest.version, '1.0.1', 'picked the right manifest using tag')
@@ -82,11 +82,11 @@ test('basic tag selection', t => {
 test('errors if a non-registry spec is provided', t => {
   const metadata = {
     'dist-tags': {
-      foo: '1.0.1'
+      foo: '1.0.1',
     },
     versions: {
-      '1.0.1': { version: '1.0.1' }
-    }
+      '1.0.1': { version: '1.0.1' },
+    },
   }
   t.throws(() => {
     pickManifest(metadata, '!?!?!?!')
@@ -103,8 +103,8 @@ test('skips any invalid version keys', t => {
   const metadata = {
     versions: {
       '1.0.0': { version: '1.0.0' },
-      'lol ok': { version: '1.0.1' }
-    }
+      'lol ok': { version: '1.0.1' },
+    },
   }
   const manifest = pickManifest(metadata, '^1.0.0')
   t.equal(manifest.version, '1.0.0', 'avoided bad key')
@@ -119,8 +119,8 @@ test('ETARGET if range does not match anything', t => {
     versions: {
       '1.0.0': { version: '1.0.0' },
       '2.0.0': { version: '2.0.0' },
-      '2.0.5': { version: '2.0.5' }
-    }
+      '2.0.5': { version: '2.0.5' },
+    },
   }
   t.throws(() => {
     pickManifest(metadata, '^2.1.0')
@@ -132,14 +132,14 @@ test('E403 if version is forbidden', t => {
   const metadata = {
     policyRestrictions: {
       versions: {
-        '2.1.0': { version: '2.1.0' }
-      }
+        '2.1.0': { version: '2.1.0' },
+      },
     },
     versions: {
       '1.0.0': { version: '1.0.0' },
       '2.0.0': { version: '2.0.0' },
-      '2.0.5': { version: '2.0.5' }
-    }
+      '2.0.5': { version: '2.0.5' },
+    },
   }
   t.throws(() => {
     pickManifest(metadata, '2.1.0')
@@ -152,14 +152,14 @@ test('E403 if version is forbidden, provided a minor version', t => {
     policyRestrictions: {
       versions: {
         '2.1.0': { version: '2.1.0' },
-        '2.1.5': { version: '2.1.5' }
-      }
+        '2.1.5': { version: '2.1.5' },
+      },
     },
     versions: {
       '1.0.0': { version: '1.0.0' },
       '2.0.0': { version: '2.0.0' },
-      '2.0.5': { version: '2.0.5' }
-    }
+      '2.0.5': { version: '2.0.5' },
+    },
   }
   t.throws(() => {
     pickManifest(metadata, '2.1')
@@ -174,19 +174,19 @@ test('E403 if version is forbidden, provided a major version', t => {
       // note: this SHOULD not be allowed, but it's possible that
       // a registry proxy may implement policyRestrictions without
       // properly modifying dist-tags when it does so.
-      borked: '2.1.5'
+      borked: '2.1.5',
     },
     policyRestrictions: {
       versions: {
         '1.0.0': { version: '1.0.0' },
         '2.1.0': { version: '2.1.0' },
-        '2.1.5': { version: '2.1.5' }
-      }
+        '2.1.5': { version: '2.1.5' },
+      },
     },
     versions: {
       '2.0.0': { version: '2.0.0' },
-      '2.0.5': { version: '2.0.5' }
-    }
+      '2.0.5': { version: '2.0.5' },
+    },
   }
   t.throws(() => {
     pickManifest(metadata, '1')
@@ -201,14 +201,14 @@ test('if `defaultTag` matches a given range, use it', t => {
   const metadata = {
     'dist-tags': {
       foo: '1.0.1',
-      latest: '1.0.0'
+      latest: '1.0.0',
     },
     versions: {
       '1.0.0': { version: '1.0.0' },
       '1.0.1': { version: '1.0.1' },
       '1.0.2': { version: '1.0.2' },
-      '2.0.0': { version: '2.0.0' }
-    }
+      '2.0.0': { version: '2.0.0' },
+    },
   }
   t.equal(
     pickManifest(metadata, '^1.0.0', { defaultTag: 'foo' }).version,
@@ -232,14 +232,14 @@ test('* ranges use `defaultTag` if no versions match', t => {
   const metadata = {
     'dist-tags': {
       latest: '1.0.0-pre.0',
-      beta: '2.0.0-beta.0'
+      beta: '2.0.0-beta.0',
     },
     versions: {
       '1.0.0-pre.0': { version: '1.0.0-pre.0' },
       '1.0.0-pre.1': { version: '1.0.0-pre.1' },
       '2.0.0-beta.0': { version: '2.0.0-beta.0' },
-      '2.0.0-beta.1': { version: '2.0.0-beta.1' }
-    }
+      '2.0.0-beta.1': { version: '2.0.0-beta.1' },
+    },
   }
   t.equal(
     pickManifest(metadata, '*', { defaultTag: 'beta' }).version,
@@ -290,8 +290,8 @@ test('matches even if requested version has spaces', t => {
       '1.0.0': { version: '1.0.0' },
       '1.0.1': { version: '1.0.1' },
       '1.0.2': { version: '1.0.2' },
-      '2.0.0': { version: '2.0.0' }
-    }
+      '2.0.0': { version: '2.0.0' },
+    },
   }
   const manifest = pickManifest(metadata, '  1.0.0 ')
   t.equal(manifest.version, '1.0.0', 'picked the right manifest even though `wanted` had spaced')
@@ -304,8 +304,8 @@ test('matches even if requested version has garbage', t => {
       '1.0.0': { version: '1.0.0' },
       '1.0.1': { version: '1.0.1' },
       '1.0.2': { version: '1.0.2' },
-      '2.0.0': { version: '2.0.0' }
-    }
+      '2.0.0': { version: '2.0.0' },
+    },
   }
   const manifest = pickManifest(metadata, '== 1.0.0 || foo')
   t.equal(manifest.version, '1.0.0', 'picked the right manifest even though `wanted` had garbage')
@@ -318,8 +318,8 @@ test('matches skip deprecated versions', t => {
       '1.0.0': { version: '1.0.0' },
       '1.0.1': { version: '1.0.1' },
       '1.1.0': { version: '1.1.0', deprecated: 'yes' },
-      '2.0.0': { version: '2.0.0' }
-    }
+      '2.0.0': { version: '2.0.0' },
+    },
   }
   const manifest = pickManifest(metadata, '^1.0.0')
   t.equal(manifest.version, '1.0.1', 'picked the right manifest')
@@ -332,8 +332,8 @@ test('matches deprecated versions if we have to', t => {
       '1.0.0': { version: '1.0.0' },
       '1.0.1': { version: '1.0.1' },
       '1.1.0': { version: '1.1.0', deprecated: 'yes' },
-      '2.0.0': { version: '2.0.0' }
-    }
+      '2.0.0': { version: '2.0.0' },
+    },
   }
   const manifest = pickManifest(metadata, '^1.1.0')
   t.equal(manifest.version, '1.1.0', 'picked the right manifest')
@@ -346,8 +346,8 @@ test('will use deprecated version if no other suitable match', t => {
       '1.0.0': { version: '1.0.0' },
       '1.0.1': { version: '1.0.1' },
       '1.1.0': { version: '1.1.0', deprecated: 'yes' },
-      '2.0.0': { version: '2.0.0' }
-    }
+      '2.0.0': { version: '2.0.0' },
+    },
   }
   const manifest = pickManifest(metadata, '^1.1.0')
   t.equal(manifest.version, '1.1.0', 'picked the right manifest')
@@ -357,7 +357,7 @@ test('will use deprecated version if no other suitable match', t => {
 test('accepts opts.before option to do date-based cutoffs', t => {
   const metadata = {
     'dist-tags': {
-      latest: '3.0.0'
+      latest: '3.0.0',
     },
     time: {
       modified: '2018-01-03T00:00:00.000Z',
@@ -366,52 +366,56 @@ test('accepts opts.before option to do date-based cutoffs', t => {
       '2.0.0': '2018-01-02T00:00:00.000Z',
       '2.0.1': '2018-01-03T00:00:00.000Z',
       '2.0.2': '2018-01-03T00:00:00.123Z',
-      '3.0.0': '2018-01-04T00:00:00.000Z'
+      '3.0.0': '2018-01-04T00:00:00.000Z',
     },
     versions: {
       '1.0.0': { version: '1.0.0' },
       '2.0.0': { version: '2.0.0' },
       '2.0.1': { version: '2.0.1' },
-      '3.0.0': { version: '3.0.0' }
-    }
+      '3.0.0': { version: '3.0.0' },
+    },
   }
 
   let manifest = pickManifest(metadata, '*', {
-    before: '2018-01-02'
+    before: '2018-01-02',
   })
   t.equal(manifest.version, '2.0.0', 'filtered out 3.0.0 because of dates')
 
   manifest = pickManifest(metadata, 'latest', {
-    before: '2018-01-02'
+    before: '2018-01-02',
   })
-  t.equal(manifest.version, '2.0.0', 'tag specs pick highest before dist-tag but within the range in question')
+  t.equal(
+    manifest.version,
+    '2.0.0',
+    'tag specs pick highest before dist-tag but within the range in question'
+  )
 
   manifest = pickManifest(metadata, '*', {
-    before: Date.parse('2018-01-03T00:00:00.000Z')
+    before: Date.parse('2018-01-03T00:00:00.000Z'),
   })
   t.equal(manifest.version, '2.0.1', 'numeric timestamp supported with ms accuracy')
 
   manifest = pickManifest(metadata, '*', {
-    before: new Date('2018-01-03T00:00:00.000Z')
+    before: new Date('2018-01-03T00:00:00.000Z'),
   })
   t.equal(manifest.version, '2.0.1', 'date obj supported with ms accuracy')
 
   t.throws(() => pickManifest(metadata, '3.0.0', {
-    before: '2018-01-02'
+    before: '2018-01-02',
   }), { code: 'ETARGET' }, 'version filtered out by date')
 
   t.throws(() => pickManifest(metadata, '', {
-    before: '1918-01-02'
+    before: '1918-01-02',
   }), { code: 'ENOVERSIONS' }, 'all version filtered out by date')
 
   manifest = pickManifest(metadata, '^2', {
-    before: '2018-01-02'
+    before: '2018-01-02',
   })
   t.equal(manifest.version, '2.0.0', 'non-tag ranges filtered')
 
   t.throws(() => {
     pickManifest(metadata, '^3', {
-      before: '2018-01-02'
+      before: '2018-01-02',
     })
   }, /with a date before/, 'range for out-of-range spec fails even if defaultTag avail')
   t.end()
@@ -425,8 +429,8 @@ test('prefers versions that satisfy the engines requirement', t => {
       '1.2.0': { version: '1.2.0', engines: { node: '>=8' } },
       '1.3.0': { version: '1.3.0', engines: { node: '>=10' } },
       '1.4.0': { version: '1.4.0', engines: { node: '>=12' } },
-      '1.5.0': { version: '1.5.0', engines: { node: '>=14' } }
-    }
+      '1.5.0': { version: '1.5.0', engines: { node: '>=14' } },
+    },
   }
 
   t.equal(pickManifest(pack, '1.x', { nodeVersion: '14.0.0' }).version, '1.5.0')
@@ -447,19 +451,19 @@ test('support selecting staged versions if allowed by options', t => {
       // note: this SHOULD not be allowed, but it's possible that
       // a registry proxy may implement stagedVersions without
       // properly modifying dist-tags when it does so.
-      borked: '2.0.0'
+      borked: '2.0.0',
     },
     versions: {
-      '1.0.0': { version: '1.0.0' }
+      '1.0.0': { version: '1.0.0' },
     },
     stagedVersions: {
       versions: {
-        '2.0.0': { version: '2.0.0' }
-      }
+        '2.0.0': { version: '2.0.0' },
+      },
     },
     time: {
-      '1.0.0': '2018-01-03T00:00:00.000Z'
-    }
+      '1.0.0': '2018-01-03T00:00:00.000Z',
+    },
   }
 
   t.equal(pickManifest(pack, '1||2').version, '1.0.0')
@@ -467,7 +471,7 @@ test('support selecting staged versions if allowed by options', t => {
   t.equal(pickManifest(pack, '2', { includeStaged: true }).version, '2.0.0')
   t.equal(pickManifest(pack, '2', {
     includeStaged: true,
-    before: '2018-01-01'
+    before: '2018-01-01',
   }).version, '2.0.0', 'version without time entry not subject to before filtering')
   t.throws(() => pickManifest(pack, '2'), { code: 'ETARGET' })
   t.throws(() => pickManifest(pack, 'borked'), { code: 'ETARGET' })
@@ -479,26 +483,26 @@ test('support excluding avoided version ranges', t => {
   const metadata = {
     name: 'vulny',
     'dist-tags': {
-      latest: '1.0.3'
+      latest: '1.0.3',
     },
     versions: {
       '1.0.0': { version: '1.0.0' },
       '1.0.1': { version: '1.0.1' },
       '1.0.2': { version: '1.0.2' },
       '1.0.3': { version: '1.0.3' },
-      '2.0.0': { version: '2.0.0' }
-    }
+      '2.0.0': { version: '2.0.0' },
+    },
   }
   const manifest = pickManifest(metadata, '^1.0.0', {
-    avoid: '>=1.0.3'
+    avoid: '>=1.0.3',
   })
   t.equal(manifest.version, '1.0.2', 'picked the right manifest using ^')
   const cannotAvoid = pickManifest(metadata, '^1.0.0', {
-    avoid: '1.x'
+    avoid: '1.x',
   })
   t.match(cannotAvoid, {
     version: '1.0.3',
-    _shouldAvoid: true
+    _shouldAvoid: true,
   }, 'could not avoid within SemVer range')
   t.end()
 })
@@ -507,51 +511,51 @@ test('support excluding avoided version ranges strictly', t => {
   const metadata = {
     name: 'vulny',
     'dist-tags': {
-      latest: '1.0.3'
+      latest: '1.0.3',
     },
     versions: {
       '1.0.0': { version: '1.0.0' },
       '1.0.1': { version: '1.0.1' },
       '1.0.2': { version: '1.0.2' },
       '1.0.3': { version: '1.0.3' },
-      '2.0.0': { version: '2.0.0' }
-    }
+      '2.0.0': { version: '2.0.0' },
+    },
   }
   const manifest = pickManifest(metadata, '^1.0.2', {
     avoid: '1.x >1.0.2',
-    avoidStrict: true
+    avoidStrict: true,
   })
   t.match(manifest, {
-    version: '1.0.2'
+    version: '1.0.2',
   }, 'picked the right manifest using ^')
 
   const breakRange = pickManifest(metadata, '1.0.2', {
     avoid: '1.x <1.0.3',
-    avoidStrict: true
+    avoidStrict: true,
   })
   t.match(breakRange, {
     version: '1.0.3',
     _outsideDependencyRange: true,
-    _isSemVerMajor: false
+    _isSemVerMajor: false,
   }, 'broke dep range, but not SemVer major')
 
   const majorBreak = pickManifest(metadata, '1.0.2', {
     avoid: '1.x',
-    avoidStrict: true
+    avoidStrict: true,
   })
   t.match(majorBreak, {
     version: '2.0.0',
     _outsideDependencyRange: true,
-    _isSemVerMajor: true
+    _isSemVerMajor: true,
   }, 'broke dep range with SemVer-major change')
 
   t.throws(() => pickManifest(metadata, '^1.0.0', {
     avoid: '<3.0.0',
-    avoidStrict: true
+    avoidStrict: true,
   }), {
     code: 'ETARGET',
     message: 'No avoidable versions for vulny',
-    avoid: '<3.0.0'
+    avoid: '<3.0.0',
   })
 
   t.end()
@@ -567,8 +571,8 @@ test('normalize package bins', t => {
       '1.0.0': { bin, name, version: '1.0.0' },
       '1.0.1': { bin, name, version: '1.0.1' },
       '1.0.2': { bin, name, version: '1.0.2' },
-      '2.0.0': { bin, name, version: '2.0.0' }
-    }
+      '2.0.0': { bin, name, version: '2.0.0' },
+    },
   }
 
   const nameScoped = '@scope/foobar'
@@ -578,8 +582,8 @@ test('normalize package bins', t => {
       '1.0.0': { bin, name: nameScoped, version: '1.0.0' },
       '1.0.1': { bin, name: nameScoped, version: '1.0.1' },
       '1.0.2': { bin, name: nameScoped, version: '1.0.2' },
-      '2.0.0': { bin, name: nameScoped, version: '2.0.0' }
-    }
+      '2.0.0': { bin, name: nameScoped, version: '2.0.0' },
+    },
   }
 
   const manifest = pickManifest(metadata, '^1.0.0')
@@ -587,8 +591,8 @@ test('normalize package bins', t => {
     name,
     version: '1.0.2',
     bin: {
-      foobar: 'bin/foobar.js'
-    }
+      foobar: 'bin/foobar.js',
+    },
   }, 'normalized the package bin, unscoped')
 
   const manifestScoped = pickManifest(metadataScoped, '^1.0.0')
@@ -596,8 +600,8 @@ test('normalize package bins', t => {
     name: nameScoped,
     version: '1.0.2',
     bin: {
-      foobar: 'bin/foobar.js'
-    }
+      foobar: 'bin/foobar.js',
+    },
   }, 'normalized the package bin, scoped')
 
   t.end()
