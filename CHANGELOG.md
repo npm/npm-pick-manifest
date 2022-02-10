@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. 
 
+## [7.0.0](https://www.github.com/npm/npm-pick-manifest/compare/v6.1.1...v7.0.0) (2022-02-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* This drops support for node 10 and non-LTS versions of node 12 and node 14
+
+### Dependencies
+
+* @npmcli/template-oss@2.7.1 ([73e6f4f](https://www.github.com/npm/npm-pick-manifest/commit/73e6f4f9f81ceaebc327302cf4ba39c4c82b0f28))
+* bump npm-package-arg from 8.1.5 to 9.0.0 ([82f45ce](https://www.github.com/npm/npm-pick-manifest/commit/82f45ceae226bcfe206361423f13166b55c1b1fe))
+* update semver requirement from ^7.3.4 to ^7.3.5 ([9564d23](https://www.github.com/npm/npm-pick-manifest/commit/9564d238f67710c9f7111f99cae53d8abf30b6d3))
+
 ## [6.1.1](https://github.com/npm/npm-pick-manifest/compare/v6.0.0...v6.1.0) (2020-04-07)
 
 * normalize package bins in returned manifest
