@@ -1,7 +1,5 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. 
-
 ## [7.0.0](https://www.github.com/npm/npm-pick-manifest/compare/v6.1.1...v7.0.0) (2022-02-10)
 
 
