@@ -1,5 +1,12 @@
 # Changelog
 
+### [7.0.1](https://github.com/npm/npm-pick-manifest/compare/v7.0.0...v7.0.1) (2022-04-05)
+
+
+### Dependencies
+
+* bump npm-install-checks from 4.0.0 to 5.0.0 ([#53](https://github.com/npm/npm-pick-manifest/issues/53)) ([e425301](https://github.com/npm/npm-pick-manifest/commit/e425301ba64bcca0304dd572ca9a1b34170d6918))
+
 ## [7.0.0](https://www.github.com/npm/npm-pick-manifest/compare/v6.1.1...v7.0.0) (2022-02-10)
 
 
