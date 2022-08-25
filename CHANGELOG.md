@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.0.2](https://github.com/npm/npm-pick-manifest/compare/v7.0.1...v7.0.2) (2022-08-25)
+
+
+### Dependencies
+
+* bump npm-normalize-package-bin from 1.0.1 to 2.0.0 ([#60](https://github.com/npm/npm-pick-manifest/issues/60)) ([933ce0f](https://github.com/npm/npm-pick-manifest/commit/933ce0fbd4e33a37a5ce2cefcaff03d1e1d6a2ab))
+
 ### [7.0.1](https://github.com/npm/npm-pick-manifest/compare/v7.0.0...v7.0.1) (2022-04-05)
 
 
