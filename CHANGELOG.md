@@ -1,5 +1,20 @@
 # Changelog
 
+## [8.0.0](https://github.com/npm/npm-pick-manifest/compare/v7.0.2...v8.0.0) (2022-10-14)
+
+### ⚠️ BREAKING CHANGES
+
+* `npm-pick-manifest` is now compatible with the following semver range for node: `^14.17.0 || ^16.13.0 || >=18.0.0`
+
+### Features
+
+* [`a3fc66c`](https://github.com/npm/npm-pick-manifest/commit/a3fc66c3f6b52cfaec20319daf64c9dbfa08d1d3) [#61](https://github.com/npm/npm-pick-manifest/pull/61) postinstall for dependabot template-oss PR (@lukekarrys)
+
+### Dependencies
+
+* [`cf6ddfd`](https://github.com/npm/npm-pick-manifest/commit/cf6ddfdf8ede18eed26e89f1c5dcaabb80a97913) [#70](https://github.com/npm/npm-pick-manifest/pull/70) bump npm-install-checks from 5.0.0 to 6.0.0
+* [`518aba1`](https://github.com/npm/npm-pick-manifest/commit/518aba1509f85677dd08830757b43baf5a7f6d62) [#69](https://github.com/npm/npm-pick-manifest/pull/69) bump npm-normalize-package-bin from 2.0.0 to 3.0.0
+
 ## [7.0.2](https://github.com/npm/npm-pick-manifest/compare/v7.0.1...v7.0.2) (2022-08-25)
 
 
