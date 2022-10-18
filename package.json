@@ -31,7 +31,7 @@
   "dependencies": {
     "npm-install-checks": "^6.0.0",
     "npm-normalize-package-bin": "^3.0.0",
-    "npm-package-arg": "^9.0.0",
+    "npm-package-arg": "^10.0.0",
     "semver": "^7.3.5"
   },
   "devDependencies": {
