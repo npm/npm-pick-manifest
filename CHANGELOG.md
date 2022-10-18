@@ -1,5 +1,11 @@
 # Changelog
 
+## [8.0.1](https://github.com/npm/npm-pick-manifest/compare/v8.0.0...v8.0.1) (2022-10-18)
+
+### Dependencies
+
+* [`9a5d485`](https://github.com/npm/npm-pick-manifest/commit/9a5d4859fcfb5bcb5cbbb309b5cc5a40dae9954e) [#73](https://github.com/npm/npm-pick-manifest/pull/73) bump npm-package-arg from 9.1.2 to 10.0.0
+
 ## [8.0.0](https://github.com/npm/npm-pick-manifest/compare/v7.0.2...v8.0.0) (2022-10-14)
 
 ### ⚠️ BREAKING CHANGES
