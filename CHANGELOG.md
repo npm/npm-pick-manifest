@@ -1,5 +1,11 @@
 # Changelog
 
+## [8.0.2](https://github.com/npm/npm-pick-manifest/compare/v8.0.1...v8.0.2) (2023-07-26)
+
+### Bug Fixes
+
+* [`66c3754`](https://github.com/npm/npm-pick-manifest/commit/66c37549e4a8b5fe462fadc9b0c6f1935a7adf3f) [#91](https://github.com/npm/npm-pick-manifest/pull/91) fallback for missing `packument.versions` (#91) (@chernodub)
+
 ## [8.0.1](https://github.com/npm/npm-pick-manifest/compare/v8.0.0...v8.0.1) (2022-10-18)
 
 ### Dependencies
