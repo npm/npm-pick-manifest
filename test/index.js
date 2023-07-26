@@ -606,3 +606,66 @@ test('normalize package bins', t => {
 
   t.end()
 })
+
+test('decorates created time', t => {
+  const name = 'foobar'
+  const metadata = {
+    name,
+    versions: {
+      '1.0.0': { name, version: '1.0.0' },
+      '1.0.1': { name, version: '1.0.1' },
+      '1.0.2': { name, version: '1.0.2' },
+      '2.0.0': { name, version: '2.0.0' },
+    },
+    time: {
+      '1.0.0': '2001-01-01T00:00:00.000Z',
+      '1.0.1': '2017-01-01T00:00:00.000Z',
+      '1.0.2': '2018-01-01T00:00:00.000Z',
+      '2.0.0': '2019-01-01T00:00:00.000Z',
+    },
+  }
+
+  const manifest = pickManifest(metadata, '^1.0.0')
+  t.strictSame(manifest, {
+    name,
+    version: '1.0.2',
+    _time: '2018-01-01T00:00:00.000Z',
+  }, 'decorated the package with time')
+
+  const metadataWithoutTime = {
+    name,
+    versions: {
+      '1.0.0': { name, version: '1.0.0' },
+      '1.0.1': { name, version: '1.0.1' },
+      '1.0.2': { name, version: '1.0.2' },
+      '2.0.0': { name, version: '2.0.0' },
+    },
+  }
+
+  const metadataNoTime = pickManifest(metadataWithoutTime, '^1.0.0')
+  t.strictSame(metadataNoTime, {
+    name,
+    version: '1.0.2',
+  }, 'ignores no time')
+
+  const metadataWithMissingTime = {
+    name,
+    versions: {
+      '1.0.0': { name, version: '1.0.0' },
+      '1.0.1': { name, version: '1.0.1' },
+      '1.0.2': { name, version: '1.0.2' },
+      '2.0.0': { name, version: '2.0.0' },
+    },
+    time: {
+      '2.0.0': '2018-01-01T00:00:00.000Z',
+    },
+  }
+
+  const metadataMissingTime = pickManifest(metadataWithMissingTime, '^1.0.0')
+  t.strictSame(metadataMissingTime, {
+    name,
+    version: '1.0.2',
+  }, 'ignores missing time for version')
+
+  t.end()
+})
