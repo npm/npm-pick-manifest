@@ -606,3 +606,16 @@ test('normalize package bins', t => {
 
   t.end()
 })
+
+test('no matching version', t => {
+  const metadata = {
+    name: 'package',
+  }
+  const expectedVersion = '1.1.1'
+
+  t.throws(() => {
+    pickManifest(metadata, expectedVersion)
+  }, /No matching version found/)
+
+  t.end()
+})
