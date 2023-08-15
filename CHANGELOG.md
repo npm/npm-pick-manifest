@@ -1,5 +1,19 @@
 # Changelog
 
+## [9.0.0](https://github.com/npm/npm-pick-manifest/compare/v8.0.2...v9.0.0) (2023-08-15)
+
+### ⚠️ BREAKING CHANGES
+
+* support for node 14 has been removed
+
+### Bug Fixes
+
+* [`842e4eb`](https://github.com/npm/npm-pick-manifest/commit/842e4eb36a6cf38387f75b4cc497f5124600e0d4) [#95](https://github.com/npm/npm-pick-manifest/pull/95) drop node14 support (@lukekarrys)
+
+### Dependencies
+
+* [`8bdb3a6`](https://github.com/npm/npm-pick-manifest/commit/8bdb3a619b86a6689b1a558fe753d936b74939d1) [#94](https://github.com/npm/npm-pick-manifest/pull/94) bump npm-package-arg from 10.1.0 to 11.0.0
+
 ## [8.0.2](https://github.com/npm/npm-pick-manifest/compare/v8.0.1...v8.0.2) (2023-07-26)
 
 ### Bug Fixes
