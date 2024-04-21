@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.0.1](https://github.com/npm/npm-pick-manifest/compare/v9.0.0...v9.0.1) (2024-04-21)
+
+### Chores
+
+* [`1667d9b`](https://github.com/npm/npm-pick-manifest/commit/1667d9b7c2fc37dfee14c9ab4a89fb46c0904e27) [#125](https://github.com/npm/npm-pick-manifest/pull/125) postinstall for dependabot template-oss PR (@lukekarrys)
+* [`dd5fc17`](https://github.com/npm/npm-pick-manifest/commit/dd5fc1775e3956d10b1778be578026099640f234) [#125](https://github.com/npm/npm-pick-manifest/pull/125) bump @npmcli/template-oss from 4.21.3 to 4.21.4 (@dependabot[bot])
+
 ## [9.0.0](https://github.com/npm/npm-pick-manifest/compare/v8.0.2...v9.0.0) (2023-08-15)
 
 ### ⚠️ BREAKING CHANGES
