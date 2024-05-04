@@ -1,5 +1,17 @@
 # Changelog
 
+## [9.0.1](https://github.com/npm/npm-pick-manifest/compare/v9.0.0...v9.0.1) (2024-05-04)
+
+### Bug Fixes
+
+* [`286569a`](https://github.com/npm/npm-pick-manifest/commit/286569a69cbf3ffae1dd67970d8c24602d67606b) [#126](https://github.com/npm/npm-pick-manifest/pull/126) linting: no-unused-vars (@lukekarrys)
+
+### Chores
+
+* [`7242a55`](https://github.com/npm/npm-pick-manifest/commit/7242a553c29ef28f639c29695b74fcfbf4f423b3) [#126](https://github.com/npm/npm-pick-manifest/pull/126) bump @npmcli/template-oss to 4.22.0 (@lukekarrys)
+* [`581d69b`](https://github.com/npm/npm-pick-manifest/commit/581d69ba3c1543bbec64115c273accc68ae11f89) [#126](https://github.com/npm/npm-pick-manifest/pull/126) postinstall for dependabot template-oss PR (@lukekarrys)
+* [`dd5fc17`](https://github.com/npm/npm-pick-manifest/commit/dd5fc1775e3956d10b1778be578026099640f234) [#125](https://github.com/npm/npm-pick-manifest/pull/125) bump @npmcli/template-oss from 4.21.3 to 4.21.4 (@dependabot[bot])
+
 ## [9.0.0](https://github.com/npm/npm-pick-manifest/compare/v8.0.2...v9.0.0) (2023-08-15)
 
 ### ⚠️ BREAKING CHANGES
