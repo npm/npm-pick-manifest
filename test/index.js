@@ -130,6 +130,9 @@ test('ETARGET if range does not match anything', t => {
 
 test('E403 if version is forbidden', t => {
   const metadata = {
+    'dist-tags': {
+      latest: '2.1.0', // do not default the latest if restricted
+    },
     policyRestrictions: {
       versions: {
         '2.1.0': { version: '2.1.0' },
@@ -141,6 +144,9 @@ test('E403 if version is forbidden', t => {
       '2.0.5': { version: '2.0.5' },
     },
   }
+  t.equal(pickManifest(metadata, '2').version, '2.0.5')
+  t.equal(pickManifest(metadata, '').version, '2.0.5')
+  t.equal(pickManifest(metadata, '1 || 2').version, '2.0.5')
   t.throws(() => {
     pickManifest(metadata, '2.1.0')
   }, { code: 'E403' }, 'got correct error on match failure')
@@ -423,6 +429,9 @@ test('accepts opts.before option to do date-based cutoffs', t => {
 
 test('prefers versions that satisfy the engines requirement', t => {
   const pack = {
+    'dist-tags': {
+      latest: '1.5.0', // do not default latest if engine mismatch
+    },
     versions: {
       '1.0.0': { version: '1.0.0', engines: { node: '>=4' } },
       '1.1.0': { version: '1.1.0', engines: { node: '>=6' } },
@@ -430,6 +439,8 @@ test('prefers versions that satisfy the engines requirement', t => {
       '1.3.0': { version: '1.3.0', engines: { node: '>=10' } },
       '1.4.0': { version: '1.4.0', engines: { node: '>=12' } },
       '1.5.0': { version: '1.5.0', engines: { node: '>=14' } },
+      // not tagged as latest, won't be chosen by default
+      '1.5.1': { version: '1.5.0', engines: { node: '>=14' } },
     },
   }
 
