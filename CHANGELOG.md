@@ -1,5 +1,11 @@
 # Changelog
 
+## [9.1.0](https://github.com/npm/npm-pick-manifest/compare/v9.0.1...v9.1.0) (2024-07-09)
+
+### Features
+
+* [`9f5560f`](https://github.com/npm/npm-pick-manifest/commit/9f5560ff8a21a83323fa188b44db8545ac8bd55d) [#33](https://github.com/npm/npm-pick-manifest/pull/33) improve heuristics when dist-tags.latest is in range (#33) (@isaacs)
+
 ## [9.0.1](https://github.com/npm/npm-pick-manifest/compare/v9.0.0...v9.0.1) (2024-05-04)
 
 ### Bug Fixes
