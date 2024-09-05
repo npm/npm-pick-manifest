@@ -31,7 +31,7 @@
   "license": "ISC",
   "dependencies": {
     "npm-install-checks": "^7.0.0",
-    "npm-normalize-package-bin": "^3.0.0",
+    "npm-normalize-package-bin": "^4.0.0",
     "npm-package-arg": "^11.0.0",
     "semver": "^7.3.5"
   },
