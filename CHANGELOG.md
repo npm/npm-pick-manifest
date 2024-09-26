@@ -1,5 +1,20 @@
 # Changelog
 
+## [10.0.0](https://github.com/npm/npm-pick-manifest/compare/v9.1.0...v10.0.0) (2024-09-26)
+### ⚠️ BREAKING CHANGES
+* `npm-pick-manifest` now supports node `^18.17.0 || >=20.5.0`
+### Bug Fixes
+* [`dd83a53`](https://github.com/npm/npm-pick-manifest/commit/dd83a53f6fbdfdf9832e3c98455a4e747c83a496) [#145](https://github.com/npm/npm-pick-manifest/pull/145) align to npm 10 node engine range (@reggi)
+### Dependencies
+* [`6b4df8d`](https://github.com/npm/npm-pick-manifest/commit/6b4df8dc60e85976fed36263eb566f2100b39434) [#145](https://github.com/npm/npm-pick-manifest/pull/145) `npm-package-arg@12.0.0`
+* [`c2ae5b7`](https://github.com/npm/npm-pick-manifest/commit/c2ae5b7b27ccdc74f4b0b09c429de45a9a376d2e) [#145](https://github.com/npm/npm-pick-manifest/pull/145) `npm-normalize-package-bin@4.0.0`
+* [`e948cef`](https://github.com/npm/npm-pick-manifest/commit/e948cef990ab715be4fd962ddbeed4b0dea41354) [#145](https://github.com/npm/npm-pick-manifest/pull/145) `npm-install-checks@7.1.0`
+### Chores
+* [`2e1fdb4`](https://github.com/npm/npm-pick-manifest/commit/2e1fdb41c0d550afe5a54ff0d7cc1ef46e5ca5c4) [#145](https://github.com/npm/npm-pick-manifest/pull/145) run template-oss-apply (@reggi)
+* [`7891f6b`](https://github.com/npm/npm-pick-manifest/commit/7891f6bb820b10a2613dbbdfe2d1cb00de885510) [#140](https://github.com/npm/npm-pick-manifest/pull/140) bump @npmcli/eslint-config from 4.0.5 to 5.0.0 (@dependabot[bot])
+* [`ae2ffc5`](https://github.com/npm/npm-pick-manifest/commit/ae2ffc5fda7b9e6ac8d229918c1982427bddf3ed) [#138](https://github.com/npm/npm-pick-manifest/pull/138) postinstall for dependabot template-oss PR (@hashtagchris)
+* [`7744312`](https://github.com/npm/npm-pick-manifest/commit/7744312b3df3cbe54f955bed01b2b2af856b2809) [#138](https://github.com/npm/npm-pick-manifest/pull/138) bump @npmcli/template-oss from 4.22.0 to 4.23.3 (@dependabot[bot])
+
 ## [9.1.0](https://github.com/npm/npm-pick-manifest/compare/v9.0.1...v9.1.0) (2024-07-09)
 
 ### Features
