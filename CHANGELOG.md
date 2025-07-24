@@ -1,5 +1,16 @@
 # Changelog
 
+## [11.0.0](https://github.com/npm/npm-pick-manifest/compare/v10.0.0...v11.0.0) (2025-07-24)
+### ⚠️ BREAKING CHANGES
+* `npm-pick-manifest` now supports node `^20.17.0 || >=22.9.0`
+### Bug Fixes
+* [`754f197`](https://github.com/npm/npm-pick-manifest/commit/754f197c90aa6e8dab45f2cfc30ccd55cf64319a) [#154](https://github.com/npm/npm-pick-manifest/pull/154) align to npm 11 node engine range (@owlstronaut)
+### Dependencies
+* [`a289de9`](https://github.com/npm/npm-pick-manifest/commit/a289de9a4bb5639fcfa8f84ee1d12e5f4ca0ed5c) [#154](https://github.com/npm/npm-pick-manifest/pull/154) `npm-package-arg@13.0.0`
+### Chores
+* [`017dcde`](https://github.com/npm/npm-pick-manifest/commit/017dcdeec716947348ec76658d5c8b1933de4040) [#150](https://github.com/npm/npm-pick-manifest/pull/150) postinstall workflow updates (#150) (@owlstronaut)
+* [`fb93cfd`](https://github.com/npm/npm-pick-manifest/commit/fb93cfd13844507384e6b51ed91aaf19c78a7cdc) [#152](https://github.com/npm/npm-pick-manifest/pull/152) bump @npmcli/template-oss from 4.24.4 to 4.25.0 (#152) (@dependabot[bot], @npm-cli-bot)
+
 ## [10.0.0](https://github.com/npm/npm-pick-manifest/compare/v9.1.0...v10.0.0) (2024-09-26)
 ### ⚠️ BREAKING CHANGES
 * `npm-pick-manifest` now supports node `^18.17.0 || >=20.5.0`
