@@ -32,7 +32,7 @@
   "dependencies": {
     "npm-install-checks": "^7.1.0",
     "npm-normalize-package-bin": "^4.0.0",
-    "npm-package-arg": "^12.0.0",
+    "npm-package-arg": "^13.0.0",
     "semver": "^7.3.5"
   },
   "devDependencies": {
