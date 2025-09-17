@@ -1,5 +1,9 @@
 # Changelog
 
+## [11.0.1](https://github.com/npm/npm-pick-manifest/compare/v11.0.0...v11.0.1) (2025-09-17)
+### Bug Fixes
+* [`22c7523`](https://github.com/npm/npm-pick-manifest/commit/22c7523380c65c08055cad985703fbd298e00d5a) [#156](https://github.com/npm/npm-pick-manifest/pull/156) inline multi-line comments (#156) (@owlstronaut)
+
 ## [11.0.0](https://github.com/npm/npm-pick-manifest/compare/v10.0.0...v11.0.0) (2025-07-24)
 ### ⚠️ BREAKING CHANGES
 * `npm-pick-manifest` now supports node `^20.17.0 || >=22.9.0`
