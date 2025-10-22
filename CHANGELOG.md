@@ -1,5 +1,11 @@
 # Changelog
 
+## [11.0.2](https://github.com/npm/npm-pick-manifest/compare/v11.0.1...v11.0.2) (2025-10-22)
+### Dependencies
+* [`1753561`](https://github.com/npm/npm-pick-manifest/commit/1753561eb912a84114bd3d3e9bfb8c2a49c27894) [#161](https://github.com/npm/npm-pick-manifest/pull/161) bump npm-normalize-package-bin from 4.0.0 to 5.0.0 (#161) (@dependabot[bot])
+### Chores
+* [`8c9bd73`](https://github.com/npm/npm-pick-manifest/commit/8c9bd733ccdd100217ff4d0ffd1c5b6379dae74d) [#160](https://github.com/npm/npm-pick-manifest/pull/160) bump @npmcli/template-oss from 4.26.0 to 4.27.1 (#160) (@dependabot[bot], @npm-cli-bot)
+
 ## [11.0.1](https://github.com/npm/npm-pick-manifest/compare/v11.0.0...v11.0.1) (2025-09-17)
 ### Bug Fixes
 * [`22c7523`](https://github.com/npm/npm-pick-manifest/commit/22c7523380c65c08055cad985703fbd298e00d5a) [#156](https://github.com/npm/npm-pick-manifest/pull/156) inline multi-line comments (#156) (@owlstronaut)
