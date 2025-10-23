@@ -30,7 +30,7 @@
   "author": "GitHub Inc.",
   "license": "ISC",
   "dependencies": {
-    "npm-install-checks": "^7.1.0",
+    "npm-install-checks": "^8.0.0",
     "npm-normalize-package-bin": "^5.0.0",
     "npm-package-arg": "^13.0.0",
     "semver": "^7.3.5"
