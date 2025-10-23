@@ -1,5 +1,11 @@
 # Changelog
 
+## [11.0.3](https://github.com/npm/npm-pick-manifest/compare/v11.0.2...v11.0.3) (2025-10-23)
+### Dependencies
+* [`a37504d`](https://github.com/npm/npm-pick-manifest/commit/a37504d5640ac121ecc7a3a72272f710bf8f99d6) [#164](https://github.com/npm/npm-pick-manifest/pull/164) bump npm-install-checks from 7.1.2 to 8.0.0 (#164) (@dependabot[bot])
+### Chores
+* [`4ac89d3`](https://github.com/npm/npm-pick-manifest/commit/4ac89d36522dc9dc2f36e78536c5458f52f7e373) [#163](https://github.com/npm/npm-pick-manifest/pull/163) bump @npmcli/eslint-config from 5.1.0 to 6.0.0 (#163) (@dependabot[bot])
+
 ## [11.0.2](https://github.com/npm/npm-pick-manifest/compare/v11.0.1...v11.0.2) (2025-10-22)
 ### Dependencies
 * [`1753561`](https://github.com/npm/npm-pick-manifest/commit/1753561eb912a84114bd3d3e9bfb8c2a49c27894) [#161](https://github.com/npm/npm-pick-manifest/pull/161) bump npm-normalize-package-bin from 4.0.0 to 5.0.0 (#161) (@dependabot[bot])
