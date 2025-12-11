@@ -1,10 +1,11 @@
 'use strict'
 
-const test = require('tap').test
+const { test } = require('node:test')
+const assert = require('node:assert')
 
 const pickManifest = require('..')
 
-test('basic carat range selection', t => {
+test('basic carat range selection', () => {
   const metadata = {
     versions: {
       '1.0.0': { version: '1.0.0' },
@@ -14,11 +15,10 @@ test('basic carat range selection', t => {
     },
   }
   const manifest = pickManifest(metadata, '^1.0.0')
-  t.equal(manifest.version, '1.0.2', 'picked the right manifest using ^')
-  t.end()
+  assert.strictEqual(manifest.version, '1.0.2', 'picked the right manifest using ^')
 })
 
-test('basic tilde range selection', t => {
+test('basic tilde range selection', () => {
   const metadata = {
     versions: {
       '1.0.0': { version: '1.0.0' },
@@ -28,11 +28,10 @@ test('basic tilde range selection', t => {
     },
   }
   const manifest = pickManifest(metadata, '~1.0.0')
-  t.equal(manifest.version, '1.0.2', 'picked the right manifest using ~')
-  t.end()
+  assert.strictEqual(manifest.version, '1.0.2', 'picked the right manifest using ~')
 })
 
-test('basic mathematical range selection', t => {
+test('basic mathematical range selection', () => {
   const metadata = {
     versions: {
       '1.0.0': { version: '1.0.0' },
@@ -42,13 +41,12 @@ test('basic mathematical range selection', t => {
     },
   }
   const manifest1 = pickManifest(metadata, '>=1.0.0 <2')
-  t.equal(manifest1.version, '1.0.2', 'picked the right manifest using mathematical range')
+  assert.strictEqual(manifest1.version, '1.0.2', 'picked the right manifest using mathematical range')
   const manifest2 = pickManifest(metadata, '=1.0.0')
-  t.equal(manifest2.version, '1.0.0', 'picked the right manifest using mathematical range')
-  t.end()
+  assert.strictEqual(manifest2.version, '1.0.0', 'picked the right manifest using mathematical range')
 })
 
-test('basic version selection', t => {
+test('basic version selection', () => {
   const metadata = {
     versions: {
       '1.0.0': { version: '1.0.0' },
@@ -58,11 +56,10 @@ test('basic version selection', t => {
     },
   }
   const manifest = pickManifest(metadata, '1.0.0')
-  t.equal(manifest.version, '1.0.0', 'picked the right manifest using specific version')
-  t.end()
+  assert.strictEqual(manifest.version, '1.0.0', 'picked the right manifest using specific version')
 })
 
-test('basic tag selection', t => {
+test('basic tag selection', () => {
   const metadata = {
     'dist-tags': {
       foo: '1.0.1',
@@ -75,11 +72,10 @@ test('basic tag selection', t => {
     },
   }
   const manifest = pickManifest(metadata, 'foo')
-  t.equal(manifest.version, '1.0.1', 'picked the right manifest using tag')
-  t.end()
+  assert.strictEqual(manifest.version, '1.0.1', 'picked the right manifest using tag')
 })
 
-test('errors if a non-registry spec is provided', t => {
+test('errors if a non-registry spec is provided', () => {
   const metadata = {
     'dist-tags': {
       foo: '1.0.1',
@@ -88,16 +84,15 @@ test('errors if a non-registry spec is provided', t => {
       '1.0.1': { version: '1.0.1' },
     },
   }
-  t.throws(() => {
+  assert.throws(() => {
     pickManifest(metadata, '!?!?!?!')
   }, /Invalid tag name/)
-  t.throws(() => {
+  assert.throws(() => {
     pickManifest(metadata, 'file://foo.tar.gz')
   }, /Only tag, version, and range are supported/)
-  t.end()
 })
 
-test('skips any invalid version keys', t => {
+test('skips any invalid version keys', () => {
   // Various third-party registries are prone to having trash as
   // keys. npm simply skips them. Yay robustness.
   const metadata = {
@@ -107,14 +102,13 @@ test('skips any invalid version keys', t => {
     },
   }
   const manifest = pickManifest(metadata, '^1.0.0')
-  t.equal(manifest.version, '1.0.0', 'avoided bad key')
-  t.throws(() => {
+  assert.strictEqual(manifest.version, '1.0.0', 'avoided bad key')
+  assert.throws(() => {
     pickManifest(metadata, '^1.0.1')
-  }, { code: 'ETARGET' }, 'no matching specs')
-  t.end()
+  }, (err) => err.code === 'ETARGET', 'no matching specs')
 })
 
-test('ETARGET if range does not match anything', t => {
+test('ETARGET if range does not match anything', () => {
   const metadata = {
     versions: {
       '1.0.0': { version: '1.0.0' },
@@ -122,13 +116,12 @@ test('ETARGET if range does not match anything', t => {
       '2.0.5': { version: '2.0.5' },
     },
   }
-  t.throws(() => {
+  assert.throws(() => {
     pickManifest(metadata, '^2.1.0')
-  }, { code: 'ETARGET' }, 'got correct error on match failure')
-  t.end()
+  }, (err) => err.code === 'ETARGET', 'got correct error on match failure')
 })
 
-test('E403 if version is forbidden', t => {
+test('E403 if version is forbidden', () => {
   const metadata = {
     'dist-tags': {
       latest: '2.1.0', // do not default the latest if restricted
@@ -144,16 +137,15 @@ test('E403 if version is forbidden', t => {
       '2.0.5': { version: '2.0.5' },
     },
   }
-  t.equal(pickManifest(metadata, '2').version, '2.0.5')
-  t.equal(pickManifest(metadata, '').version, '2.0.5')
-  t.equal(pickManifest(metadata, '1 || 2').version, '2.0.5')
-  t.throws(() => {
+  assert.strictEqual(pickManifest(metadata, '2').version, '2.0.5')
+  assert.strictEqual(pickManifest(metadata, '').version, '2.0.5')
+  assert.strictEqual(pickManifest(metadata, '1 || 2').version, '2.0.5')
+  assert.throws(() => {
     pickManifest(metadata, '2.1.0')
-  }, { code: 'E403' }, 'got correct error on match failure')
-  t.end()
+  }, (err) => err.code === 'E403', 'got correct error on match failure')
 })
 
-test('E403 if version is forbidden, provided a minor version', t => {
+test('E403 if version is forbidden, provided a minor version', () => {
   const metadata = {
     policyRestrictions: {
       versions: {
@@ -167,13 +159,12 @@ test('E403 if version is forbidden, provided a minor version', t => {
       '2.0.5': { version: '2.0.5' },
     },
   }
-  t.throws(() => {
+  assert.throws(() => {
     pickManifest(metadata, '2.1')
-  }, { code: 'E403' }, 'got correct error on match failure')
-  t.end()
+  }, (err) => err.code === 'E403', 'got correct error on match failure')
 })
 
-test('E403 if version is forbidden, provided a major version', t => {
+test('E403 if version is forbidden, provided a major version', () => {
   const metadata = {
     'dist-tags': {
       latest: '2.0.5',
@@ -194,16 +185,15 @@ test('E403 if version is forbidden, provided a major version', t => {
       '2.0.5': { version: '2.0.5' },
     },
   }
-  t.throws(() => {
+  assert.throws(() => {
     pickManifest(metadata, '1')
-  }, { code: 'E403' }, 'got correct error on match failure')
-  t.throws(() => {
+  }, (err) => err.code === 'E403', 'got correct error on match failure')
+  assert.throws(() => {
     pickManifest(metadata, 'borked')
-  }, { code: 'E403' }, 'got correct error on policy restricted dist-tag')
-  t.end()
+  }, (err) => err.code === 'E403', 'got correct error on policy restricted dist-tag')
 })
 
-test('if `defaultTag` matches a given range, use it', t => {
+test('if `defaultTag` matches a given range, use it', () => {
   const metadata = {
     'dist-tags': {
       foo: '1.0.1',
@@ -216,25 +206,24 @@ test('if `defaultTag` matches a given range, use it', t => {
       '2.0.0': { version: '2.0.0' },
     },
   }
-  t.equal(
+  assert.strictEqual(
     pickManifest(metadata, '^1.0.0', { defaultTag: 'foo' }).version,
     '1.0.1',
     'picked the version for foo'
   )
-  t.equal(
+  assert.strictEqual(
     pickManifest(metadata, '^2.0.0', { defaultTag: 'foo' }).version,
     '2.0.0',
     'no match, no foo'
   )
-  t.equal(
+  assert.strictEqual(
     pickManifest(metadata, '^1.0.0').version,
     '1.0.0',
     'default to `latest`'
   )
-  t.end()
 })
 
-test('* ranges use `defaultTag` if no versions match', t => {
+test('* ranges use `defaultTag` if no versions match', () => {
   const metadata = {
     'dist-tags': {
       latest: '1.0.0-pre.0',
@@ -247,50 +236,47 @@ test('* ranges use `defaultTag` if no versions match', t => {
       '2.0.0-beta.1': { version: '2.0.0-beta.1' },
     },
   }
-  t.equal(
+  assert.strictEqual(
     pickManifest(metadata, '*', { defaultTag: 'beta' }).version,
     '2.0.0-beta.0',
     'used defaultTag for all-prerelease splat.'
   )
-  t.equal(
+  assert.strictEqual(
     pickManifest(metadata, '*').version,
     '1.0.0-pre.0',
     'defaulted to `latest` when wanted is *'
   )
-  t.equal(
+  assert.strictEqual(
     pickManifest(metadata, '', { defaultTag: 'beta' }).version,
     '2.0.0-beta.0',
     'used defaultTag for all-prerelease ""'
   )
-  t.equal(
+  assert.strictEqual(
     pickManifest(metadata, '').version,
     '1.0.0-pre.0',
     'defaulted to `latest` when wanted is ""'
   )
-  t.end()
 })
 
-test('errors if metadata has no versions', t => {
-  t.throws(() => {
+test('errors if metadata has no versions', () => {
+  assert.throws(() => {
     pickManifest({ versions: {} }, '^1.0.0')
-  }, { code: 'ENOVERSIONS' })
-  t.throws(() => {
+  }, (err) => err.code === 'ENOVERSIONS')
+  assert.throws(() => {
     pickManifest({}, '^1.0.0')
-  }, { code: 'ENOVERSIONS' })
-  t.end()
+  }, (err) => err.code === 'ENOVERSIONS')
 })
 
-test('errors if metadata has no versions or restricted versions', t => {
-  t.throws(() => {
+test('errors if metadata has no versions or restricted versions', () => {
+  assert.throws(() => {
     pickManifest({ versions: {}, policyRestrictions: { versions: {} } }, '^1.0.0')
-  }, { code: 'ENOVERSIONS' })
-  t.throws(() => {
+  }, (err) => err.code === 'ENOVERSIONS')
+  assert.throws(() => {
     pickManifest({}, '^1.0.0')
-  }, { code: 'ENOVERSIONS' })
-  t.end()
+  }, (err) => err.code === 'ENOVERSIONS')
 })
 
-test('matches even if requested version has spaces', t => {
+test('matches even if requested version has spaces', () => {
   const metadata = {
     versions: {
       '1.0.0': { version: '1.0.0' },
@@ -300,11 +286,10 @@ test('matches even if requested version has spaces', t => {
     },
   }
   const manifest = pickManifest(metadata, '  1.0.0 ')
-  t.equal(manifest.version, '1.0.0', 'picked the right manifest even though `wanted` had spaced')
-  t.end()
+  assert.strictEqual(manifest.version, '1.0.0', 'picked the right manifest even though `wanted` had spaced')
 })
 
-test('matches even if requested version has garbage', t => {
+test('matches even if requested version has garbage', () => {
   const metadata = {
     versions: {
       '1.0.0': { version: '1.0.0' },
@@ -314,11 +299,10 @@ test('matches even if requested version has garbage', t => {
     },
   }
   const manifest = pickManifest(metadata, '== 1.0.0 || foo')
-  t.equal(manifest.version, '1.0.0', 'picked the right manifest even though `wanted` had garbage')
-  t.end()
+  assert.strictEqual(manifest.version, '1.0.0', 'picked the right manifest even though `wanted` had garbage')
 })
 
-test('matches skip deprecated versions', t => {
+test('matches skip deprecated versions', () => {
   const metadata = {
     versions: {
       '1.0.0': { version: '1.0.0' },
@@ -328,11 +312,10 @@ test('matches skip deprecated versions', t => {
     },
   }
   const manifest = pickManifest(metadata, '^1.0.0')
-  t.equal(manifest.version, '1.0.1', 'picked the right manifest')
-  t.end()
+  assert.strictEqual(manifest.version, '1.0.1', 'picked the right manifest')
 })
 
-test('matches deprecated versions if we have to', t => {
+test('matches deprecated versions if we have to', () => {
   const metadata = {
     versions: {
       '1.0.0': { version: '1.0.0' },
@@ -342,11 +325,10 @@ test('matches deprecated versions if we have to', t => {
     },
   }
   const manifest = pickManifest(metadata, '^1.1.0')
-  t.equal(manifest.version, '1.1.0', 'picked the right manifest')
-  t.end()
+  assert.strictEqual(manifest.version, '1.1.0', 'picked the right manifest')
 })
 
-test('will use deprecated version if no other suitable match', t => {
+test('will use deprecated version if no other suitable match', () => {
   const metadata = {
     versions: {
       '1.0.0': { version: '1.0.0' },
@@ -356,11 +338,10 @@ test('will use deprecated version if no other suitable match', t => {
     },
   }
   const manifest = pickManifest(metadata, '^1.1.0')
-  t.equal(manifest.version, '1.1.0', 'picked the right manifest')
-  t.end()
+  assert.strictEqual(manifest.version, '1.1.0', 'picked the right manifest')
 })
 
-test('accepts opts.before option to do date-based cutoffs', t => {
+test('accepts opts.before option to do date-based cutoffs', () => {
   const metadata = {
     'dist-tags': {
       latest: '3.0.0',
@@ -385,12 +366,12 @@ test('accepts opts.before option to do date-based cutoffs', t => {
   let manifest = pickManifest(metadata, '*', {
     before: '2018-01-02',
   })
-  t.equal(manifest.version, '2.0.0', 'filtered out 3.0.0 because of dates')
+  assert.strictEqual(manifest.version, '2.0.0', 'filtered out 3.0.0 because of dates')
 
   manifest = pickManifest(metadata, 'latest', {
     before: '2018-01-02',
   })
-  t.equal(
+  assert.strictEqual(
     manifest.version,
     '2.0.0',
     'tag specs pick highest before dist-tag but within the range in question'
@@ -399,35 +380,34 @@ test('accepts opts.before option to do date-based cutoffs', t => {
   manifest = pickManifest(metadata, '*', {
     before: Date.parse('2018-01-03T00:00:00.000Z'),
   })
-  t.equal(manifest.version, '2.0.1', 'numeric timestamp supported with ms accuracy')
+  assert.strictEqual(manifest.version, '2.0.1', 'numeric timestamp supported with ms accuracy')
 
   manifest = pickManifest(metadata, '*', {
     before: new Date('2018-01-03T00:00:00.000Z'),
   })
-  t.equal(manifest.version, '2.0.1', 'date obj supported with ms accuracy')
+  assert.strictEqual(manifest.version, '2.0.1', 'date obj supported with ms accuracy')
 
-  t.throws(() => pickManifest(metadata, '3.0.0', {
+  assert.throws(() => pickManifest(metadata, '3.0.0', {
     before: '2018-01-02',
-  }), { code: 'ETARGET' }, 'version filtered out by date')
+  }), (err) => err.code === 'ETARGET', 'version filtered out by date')
 
-  t.throws(() => pickManifest(metadata, '', {
+  assert.throws(() => pickManifest(metadata, '', {
     before: '1918-01-02',
-  }), { code: 'ENOVERSIONS' }, 'all version filtered out by date')
+  }), (err) => err.code === 'ENOVERSIONS', 'all version filtered out by date')
 
   manifest = pickManifest(metadata, '^2', {
     before: '2018-01-02',
   })
-  t.equal(manifest.version, '2.0.0', 'non-tag ranges filtered')
+  assert.strictEqual(manifest.version, '2.0.0', 'non-tag ranges filtered')
 
-  t.throws(() => {
+  assert.throws(() => {
     pickManifest(metadata, '^3', {
       before: '2018-01-02',
     })
   }, /with a date before/, 'range for out-of-range spec fails even if defaultTag avail')
-  t.end()
 })
 
-test('prefers versions that satisfy the engines requirement', t => {
+test('prefers versions that satisfy the engines requirement', () => {
   const pack = {
     'dist-tags': {
       latest: '1.5.0', // do not default latest if engine mismatch
@@ -444,18 +424,17 @@ test('prefers versions that satisfy the engines requirement', t => {
     },
   }
 
-  t.equal(pickManifest(pack, '1.x', { nodeVersion: '14.0.0' }).version, '1.5.0')
-  t.equal(pickManifest(pack, '1.x', { nodeVersion: '12.0.0' }).version, '1.4.0')
-  t.equal(pickManifest(pack, '1.x', { nodeVersion: '10.0.0' }).version, '1.3.0')
-  t.equal(pickManifest(pack, '1.x', { nodeVersion: '8.0.0' }).version, '1.2.0')
-  t.equal(pickManifest(pack, '1.x', { nodeVersion: '6.0.0' }).version, '1.1.0')
-  t.equal(pickManifest(pack, '1.x', { nodeVersion: '4.0.0' }).version, '1.0.0')
-  t.equal(pickManifest(pack, '1.x', { nodeVersion: '1.2.3' }).version, '1.5.0',
+  assert.strictEqual(pickManifest(pack, '1.x', { nodeVersion: '14.0.0' }).version, '1.5.0')
+  assert.strictEqual(pickManifest(pack, '1.x', { nodeVersion: '12.0.0' }).version, '1.4.0')
+  assert.strictEqual(pickManifest(pack, '1.x', { nodeVersion: '10.0.0' }).version, '1.3.0')
+  assert.strictEqual(pickManifest(pack, '1.x', { nodeVersion: '8.0.0' }).version, '1.2.0')
+  assert.strictEqual(pickManifest(pack, '1.x', { nodeVersion: '6.0.0' }).version, '1.1.0')
+  assert.strictEqual(pickManifest(pack, '1.x', { nodeVersion: '4.0.0' }).version, '1.0.0')
+  assert.strictEqual(pickManifest(pack, '1.x', { nodeVersion: '1.2.3' }).version, '1.5.0',
     'if no engine-match exists, just use whatever')
-  t.end()
 })
 
-test('support selecting staged versions if allowed by options', t => {
+test('support selecting staged versions if allowed by options', () => {
   const pack = {
     'dist-tags': {
       latest: '1.0.0',
@@ -477,20 +456,18 @@ test('support selecting staged versions if allowed by options', t => {
     },
   }
 
-  t.equal(pickManifest(pack, '1||2').version, '1.0.0')
-  t.equal(pickManifest(pack, '1||2', { includeStaged: true }).version, '1.0.0')
-  t.equal(pickManifest(pack, '2', { includeStaged: true }).version, '2.0.0')
-  t.equal(pickManifest(pack, '2', {
+  assert.strictEqual(pickManifest(pack, '1||2').version, '1.0.0')
+  assert.strictEqual(pickManifest(pack, '1||2', { includeStaged: true }).version, '1.0.0')
+  assert.strictEqual(pickManifest(pack, '2', { includeStaged: true }).version, '2.0.0')
+  assert.strictEqual(pickManifest(pack, '2', {
     includeStaged: true,
     before: '2018-01-01',
   }).version, '2.0.0', 'version without time entry not subject to before filtering')
-  t.throws(() => pickManifest(pack, '2'), { code: 'ETARGET' })
-  t.throws(() => pickManifest(pack, 'borked'), { code: 'ETARGET' })
-
-  t.end()
+  assert.throws(() => pickManifest(pack, '2'), (err) => err.code === 'ETARGET')
+  assert.throws(() => pickManifest(pack, 'borked'), (err) => err.code === 'ETARGET')
 })
 
-test('support excluding avoided version ranges', t => {
+test('support excluding avoided version ranges', () => {
   const metadata = {
     name: 'vulny',
     'dist-tags': {
@@ -507,18 +484,17 @@ test('support excluding avoided version ranges', t => {
   const manifest = pickManifest(metadata, '^1.0.0', {
     avoid: '>=1.0.3',
   })
-  t.equal(manifest.version, '1.0.2', 'picked the right manifest using ^')
+  assert.strictEqual(manifest.version, '1.0.2', 'picked the right manifest using ^')
   const cannotAvoid = pickManifest(metadata, '^1.0.0', {
     avoid: '1.x',
   })
-  t.match(cannotAvoid, {
+  assert.deepStrictEqual(cannotAvoid, {
     version: '1.0.3',
     _shouldAvoid: true,
   }, 'could not avoid within SemVer range')
-  t.end()
 })
 
-test('support excluding avoided version ranges strictly', t => {
+test('support excluding avoided version ranges strictly', () => {
   const metadata = {
     name: 'vulny',
     'dist-tags': {
@@ -536,43 +512,35 @@ test('support excluding avoided version ranges strictly', t => {
     avoid: '1.x >1.0.2',
     avoidStrict: true,
   })
-  t.match(manifest, {
-    version: '1.0.2',
-  }, 'picked the right manifest using ^')
+  assert.ok(manifest.version === '1.0.2', 'picked the right manifest using ^')
 
   const breakRange = pickManifest(metadata, '1.0.2', {
     avoid: '1.x <1.0.3',
     avoidStrict: true,
   })
-  t.match(breakRange, {
-    version: '1.0.3',
-    _outsideDependencyRange: true,
-    _isSemVerMajor: false,
-  }, 'broke dep range, but not SemVer major')
+  assert.ok(breakRange.version === '1.0.3' &&
+    breakRange._outsideDependencyRange === true &&
+    breakRange._isSemVerMajor === false, 'broke dep range, but not SemVer major')
 
   const majorBreak = pickManifest(metadata, '1.0.2', {
     avoid: '1.x',
     avoidStrict: true,
   })
-  t.match(majorBreak, {
-    version: '2.0.0',
-    _outsideDependencyRange: true,
-    _isSemVerMajor: true,
-  }, 'broke dep range with SemVer-major change')
+  assert.ok(majorBreak.version === '2.0.0' &&
+    majorBreak._outsideDependencyRange === true &&
+    majorBreak._isSemVerMajor === true, 'broke dep range with SemVer-major change')
 
-  t.throws(() => pickManifest(metadata, '^1.0.0', {
+  assert.throws(() => pickManifest(metadata, '^1.0.0', {
     avoid: '<3.0.0',
     avoidStrict: true,
-  }), {
-    code: 'ETARGET',
-    message: 'No avoidable versions for vulny',
-    avoid: '<3.0.0',
+  }), (err) => {
+    return err.code === 'ETARGET' &&
+      err.message === 'No avoidable versions for vulny' &&
+      err.avoid === '<3.0.0'
   })
-
-  t.end()
 })
 
-test('normalize package bins', t => {
+test('normalize package bins', () => {
   const bin = './bin/foobar.js'
 
   const name = 'foobar'
@@ -598,7 +566,7 @@ test('normalize package bins', t => {
   }
 
   const manifest = pickManifest(metadata, '^1.0.0')
-  t.strictSame(manifest, {
+  assert.deepStrictEqual(manifest, {
     name,
     version: '1.0.2',
     bin: {
@@ -607,26 +575,22 @@ test('normalize package bins', t => {
   }, 'normalized the package bin, unscoped')
 
   const manifestScoped = pickManifest(metadataScoped, '^1.0.0')
-  t.strictSame(manifestScoped, {
+  assert.deepStrictEqual(manifestScoped, {
     name: nameScoped,
     version: '1.0.2',
     bin: {
       foobar: 'bin/foobar.js',
     },
   }, 'normalized the package bin, scoped')
-
-  t.end()
 })
 
-test('no matching version', t => {
+test('no matching version', () => {
   const metadata = {
     name: 'package',
   }
   const expectedVersion = '1.1.1'
 
-  t.throws(() => {
+  assert.throws(() => {
     pickManifest(metadata, expectedVersion)
   }, /No matching version found/)
-
-  t.end()
 })
