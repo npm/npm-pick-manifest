@@ -1,5 +1,23 @@
 # Changelog
 
+## [12.0.0](https://github.com/npm/npm-pick-manifest/compare/v11.0.3...v12.0.0) (2026-05-18)
+### ⚠️ BREAKING CHANGES
+* `npm-pick-manifest` now supports node `^22.22.2 || ^24.15.0 || >=26.0.0`
+* template-oss-apply
+### Features
+* [`1b71e65`](https://github.com/npm/npm-pick-manifest/commit/1b71e658c77630a49c3765b78b88ac5cabae155c) [#177](https://github.com/npm/npm-pick-manifest/pull/177) bump to new node engine range (@owlstronaut)
+* [`60cde68`](https://github.com/npm/npm-pick-manifest/commit/60cde68e802f37156dceee1989999079a63c32a9) [#177](https://github.com/npm/npm-pick-manifest/pull/177) template-oss-apply (@owlstronaut)
+### Dependencies
+* [`60b6749`](https://github.com/npm/npm-pick-manifest/commit/60b67493fa4d2735856b98baa336726ec8f3fb1a) [#177](https://github.com/npm/npm-pick-manifest/pull/177) `npm-package-arg@14.0.0`
+* [`da16b63`](https://github.com/npm/npm-pick-manifest/commit/da16b63a80eccfbd3b0ec17de99e71c025632f42) [#177](https://github.com/npm/npm-pick-manifest/pull/177) `npm-normalize-package-bin@6.0.0`
+* [`20c56b2`](https://github.com/npm/npm-pick-manifest/commit/20c56b2cb890bc099708607a118f41a55f05f4a6) [#177](https://github.com/npm/npm-pick-manifest/pull/177) `npm-install-checks@9.0.0`
+### Chores
+* [`46c4246`](https://github.com/npm/npm-pick-manifest/commit/46c42469323c9b3d161d610e3a678a260ff2d4d0) [#177](https://github.com/npm/npm-pick-manifest/pull/177) template-oss-apply (@owlstronaut)
+* [`756de4f`](https://github.com/npm/npm-pick-manifest/commit/756de4f394f3e91597132184e2451df94d2d9a8f) [#177](https://github.com/npm/npm-pick-manifest/pull/177) bumping @npmcli/template-oss from 4.30.0 to 5.1.0 (@owlstronaut)
+* [`dfae65d`](https://github.com/npm/npm-pick-manifest/commit/dfae65d4d237ce242dc3c536aee738d6bdf391b3) [#168](https://github.com/npm/npm-pick-manifest/pull/168) remove tap (@owlstronaut)
+* [`547a6f7`](https://github.com/npm/npm-pick-manifest/commit/547a6f78d54f23e0e8caf6c3f7dec0fd0319fa6a) [#168](https://github.com/npm/npm-pick-manifest/pull/168) swap from tap to built-in node:test (@owlstronaut)
+* [`e343270`](https://github.com/npm/npm-pick-manifest/commit/e343270367ed71524e10e15c532a0a0d47b0fe8c) [#171](https://github.com/npm/npm-pick-manifest/pull/171) bump @npmcli/template-oss from 4.29.0 to 4.30.0 (#171) (@dependabot[bot], @npm-cli-bot)
+
 ## [11.0.3](https://github.com/npm/npm-pick-manifest/compare/v11.0.2...v11.0.3) (2025-10-23)
 ### Dependencies
 * [`a37504d`](https://github.com/npm/npm-pick-manifest/commit/a37504d5640ac121ecc7a3a72272f710bf8f99d6) [#164](https://github.com/npm/npm-pick-manifest/pull/164) bump npm-install-checks from 7.1.2 to 8.0.0 (#164) (@dependabot[bot])
